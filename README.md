@@ -1,6 +1,6 @@
 # colorbox
 
-Color box that provides various colors‘ rgb decimal code.
+Color box provides various colors‘ rgb decimal code.
 
 ## Usage
 
