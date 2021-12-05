@@ -3,7 +3,7 @@ Author       : zhangxianbing
 Date         : 2021-12-05 12:50:05
 Description  : 
 LastEditors  : zhangxianbing
-LastEditTime : 2021-12-05 22:41:33
+LastEditTime : 2021-12-05 23:25:57
 """
 __version__ = "0.1.2"
 __author__ = "zhangxianbing"
@@ -176,18 +176,17 @@ def _get_color_map():
 
         if rgb in _color_map["rgb_list"]:
             logging.warning(f"duplicated: {rgb} in {line}")
+        _color_map["rgb_list"].append(rgb)
+        _color_map["bgr_list"].append(bgr)
+        _color_map["hex_list"].append(hex)
 
         names = list(zh_names.strip().split("/")) + list(en_names.strip().split("/"))
         for name in names:
             if name in _color_map["rgb"]:
                 logging.warning(f"duplicated: {name} in {line}")
-
             _color_map["rgb"][name] = rgb
             _color_map["bgr"][name] = bgr
             _color_map["hex"][name] = hex
-            _color_map["rgb_list"].append(rgb)
-            _color_map["bgr_list"].append(bgr)
-            _color_map["hex_list"].append(hex)
 
     return _color_map
 
