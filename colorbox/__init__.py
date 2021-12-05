@@ -1,27 +1,14 @@
-# colorbox
+__version__ = "0.1.0"
+__author__ = "zhangxianbing"
 
-Color box that provides various colors‘ rgb decimal code.
+import random
+from itertools import cycle
+from typing import Optional, Tuple
 
-## Usage
-
-```python
->>> from colorbox import rgb, bgr, hex
->>> rgb("red")
-(255, 0, 0)
->>> bgr("red")
-(0, 0, 255)
->>> hex("red")
-'#FF0000'
-```
-
-## Color Map
-
-来源： <https://www.rapidtables.com/web/color/RGB_Color.html>
-
-推荐安装 vscode 插件 Color Highlight 更直观地查看以下颜色
-
-| Hex Code#RRGGBB | Decimal CodeR,G,B |         en_name         | zh_name       |
-| :-------------: | :---------------: | :---------------------: | ------------- |
+# 推荐安装 vscode 插件 Color Highlight 更直观地查看以下颜色
+# 来源： <https://www.rapidtables.com/web/color/RGB_Color.html>
+# | zh_name       |         en_name         | Hex Code#RRGGBB | Decimal CodeR,G,B |
+_color_map_text = """
 |     #FF0000     |     (255,0,0)     |           red           | 红色          |
 |     #FFA500     |    (255,165,0)    |         orange          | 橙色          |
 |     #FFFF00     |    (255,255,0)    |         yellow          | 黄色          |
@@ -146,3 +133,174 @@ Color box that provides various colors‘ rgb decimal code.
 |     #D3D3D3     |   (211,211,211)   |  light gray/light grey  | 浅灰/浅灰     |
 |     #DCDCDC     |   (220,220,220)   |        gainsboro        | 格斯伯勒      |
 |     #F5F5F5     |   (245,245,245)   |       white smoke       | 白色烟        |
+"""
+
+_color_map = None
+
+
+def _get_color_map():
+    global _color_map
+    if _color_map:
+        return _color_map
+
+    _color_map = {"rgb": {}, "bgr": {}, "hex": {}}
+
+    for line in _color_map_text.strip().split("\n"):
+        _, hex_txt, rgb_txt, en_names, zh_names, _ = line.split("|")
+        rgb = tuple(map(int, rgb_txt.strip()[1:-1].split(",")))
+        bgr = tuple(reversed(rgb))
+        hex = hex_txt.strip()
+
+        for name in zh_names.strip().split("/"):
+            _color_map["rgb"][name] = rgb
+            _color_map["bgr"][name] = bgr
+            _color_map["hex"][name] = hex
+
+        for name in en_names.strip().split("/"):
+            _color_map["rgb"][name] = rgb
+            _color_map["bgr"][name] = bgr
+            _color_map["hex"][name] = hex
+
+    _color_map["rgb_list"] = list(_color_map["rgb"].values())
+    _color_map["bgr_list"] = list(_color_map["bgr"].values())
+    _color_map["hex_list"] = list(_color_map["hex"].values())
+
+    return _color_map
+
+
+def rgb(name: str) -> Optional[Tuple[int, int, int]]:
+    """Return rgb tuple if given `name` is in color map, `None` otherwise.
+
+    Args:
+        name (str): color name
+
+    Returns:
+        Optional[Tuple[int, int, int]]: rgb tuple
+    """
+    cm = _get_color_map()
+    return cm["rgb"].get(name)
+
+
+def rand_rgb(i: int = None) -> Tuple[int, int, int]:
+    """Return random rgb tuple of color in color map.
+
+    Args:
+        i (int, optional): color index in color list if given. Defaults to None.
+
+    Returns:
+        Tuple[int, int, int]: rgb tuple
+    """
+    cm = _get_color_map()
+    cl = cm["rgb_list"]
+    if i is None:
+        return random.choice(cl)
+
+    return cl[i % (len(cl))]
+
+
+def cycle_rgb():
+    """Return cycle iterator for rbg color.
+
+    Returns:
+        [type]: [description]
+    """
+    cm = _get_color_map()
+    cl = cm["rgb_list"]
+    return cycle(cl)
+
+
+# 注: opencv 里颜色通道顺序为BGR
+def bgr(name: str) -> Optional[Tuple[int, int, int]]:
+    """Return bgr tuple if given `name` is in color map, `None` otherwise.
+
+    Args:
+        name (str): color name
+
+    Returns:
+        Optional[Tuple[int, int, int]]: bgr tuple
+    """
+    cm = _get_color_map()
+    return cm["bgr"].get(name)
+
+
+def rand_bgr(i: int = None) -> Tuple[int, int, int]:
+    """Return random bgr tuple of color in color map.
+
+    Args:
+        i (int, optional): color index in color list if given. Defaults to None.
+
+    Returns:
+        Tuple[int, int, int]: bgr tuple
+    """
+    cm = _get_color_map()
+    cl = cm["bgr_list"]
+    if i is None:
+        return random.choice(cl)
+
+    return cl[i % (len(cl))]
+
+
+def cycle_bgr():
+    """Return cycle iterator for bgr color.
+
+    Returns:
+        [type]: [description]
+    """
+    cm = _get_color_map()
+    cl = cm["bgr_list"]
+    return cycle(cl)
+
+
+def hex(name: str) -> Optional[str]:
+    """Return hex string if given `name` is in color map, `None` otherwise.
+
+    Args:
+        name (str): color name
+
+    Returns:
+        Optional[str]: hex string
+    """
+    cm = _get_color_map()
+    return cm["hex"].get(name)
+
+
+def rand_hex(i: int = None) -> str:
+    """Return hex string of color in color map.
+
+    Args:
+        i (int, optional): color index in color list if given. Defaults to None.
+
+    Returns:
+        str: color hex code
+    """
+    cm = _get_color_map()
+    cl = cm["hex_list"]
+    if i is None:
+        return random.choice(cl)
+
+    return cl[i % (len(cl))]
+
+
+def cycle_hex():
+    """Return cycle iterator for color hex code.
+
+    Returns:
+        [type]: [description]
+    """
+    cm = _get_color_map()
+    cl = cm["hex_list"]
+    return cycle(cl)
+
+
+def random_color() -> Tuple[int, int, int]:
+    """Return random color tuple"""
+    return random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
+
+
+if __name__ == "__main__":
+    from pprint import pprint
+
+    pprint(_get_color_map())
+
+    # for i in cycle_rgb():
+    #     print(i)
