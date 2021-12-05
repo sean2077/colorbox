@@ -18,7 +18,9 @@ Color box that provides various colors‘ rgb decimal code.
 
 来源： <https://www.rapidtables.com/web/color/RGB_Color.html>
 
-推荐安装 vscode 插件 Color Highlight 更直观地查看以下颜色
+推荐安装 vscode 插件 [Color Highlight](https://marketplace.visualstudio.com/items?itemName=naumovs.color-highlight) 更直观地查看以下颜色:
+
+![color_map](assets/color_map.png)
 
 | Hex Code#RRGGBB | Decimal CodeR,G,B |         en_name          | zh_name       |
 | :-------------: | :---------------: | :----------------------: | ------------- |
