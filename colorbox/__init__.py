@@ -3,7 +3,7 @@ Author       : zhangxianbing
 Date         : 2021-12-05 12:50:05
 Description  : 
 LastEditors  : zhangxianbing
-LastEditTime : 2021-12-05 23:28:03
+LastEditTime : 2021-12-07 11:21:44
 """
 __version__ = "0.1.3"
 __author__ = "zhangxianbing"
@@ -13,9 +13,11 @@ import random
 from itertools import cycle
 from typing import Optional, Tuple
 
+Color = Tuple[int, int, int]
+
 # 推荐安装 vscode 插件 Color Highlight 更直观地查看以下颜色
 # 来源： <https://www.rapidtables.com/web/color/RGB_Color.html>
-# | zh_name       |         en_name         | Hex Code#RRGGBB | Decimal CodeR,G,B |
+# | Hex Code#RRGGBB | Decimal CodeR,G,B |         en_name          | zh_name       |
 _color_map_text = """
 |     #FF0000     |     (255,0,0)     |           red            | 红色          |
 |     #FFA500     |    (255,165,0)    |          orange          | 橙色          |
@@ -191,27 +193,27 @@ def _get_color_map():
     return _color_map
 
 
-def rgb(name: str) -> Optional[Tuple[int, int, int]]:
+def rgb(name: str) -> Optional[Color]:
     """Return rgb tuple if given `name` is in color map, `None` otherwise.
 
     Args:
         name (str): color name
 
     Returns:
-        Optional[Tuple[int, int, int]]: rgb tuple
+        Optional[Color]: rgb tuple
     """
     cm = _get_color_map()
     return cm["rgb"].get(name)
 
 
-def rand_rgb(i: int = None) -> Tuple[int, int, int]:
+def rand_rgb(i: int = None) -> Color:
     """Return random rgb tuple of color in color map.
 
     Args:
         i (int, optional): color index in color list if given. Defaults to None.
 
     Returns:
-        Tuple[int, int, int]: rgb tuple
+        Color: rgb tuple
     """
     cm = _get_color_map()
     cl = cm["rgb_list"]
@@ -233,27 +235,27 @@ def cycle_rgb():
 
 
 # 注: opencv 里颜色通道顺序为BGR
-def bgr(name: str) -> Optional[Tuple[int, int, int]]:
+def bgr(name: str) -> Optional[Color]:
     """Return bgr tuple if given `name` is in color map, `None` otherwise.
 
     Args:
         name (str): color name
 
     Returns:
-        Optional[Tuple[int, int, int]]: bgr tuple
+        Optional[Color]: bgr tuple
     """
     cm = _get_color_map()
     return cm["bgr"].get(name)
 
 
-def rand_bgr(i: int = None) -> Tuple[int, int, int]:
+def rand_bgr(i: int = None) -> Color:
     """Return random bgr tuple of color in color map.
 
     Args:
         i (int, optional): color index in color list if given. Defaults to None.
 
     Returns:
-        Tuple[int, int, int]: bgr tuple
+        Color: bgr tuple
     """
     cm = _get_color_map()
     cl = cm["bgr_list"]
@@ -315,7 +317,7 @@ def cycle_hex():
     return cycle(cl)
 
 
-def random_color() -> Tuple[int, int, int]:
+def random_color() -> Color:
     """Return random color tuple"""
     return random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)
 
