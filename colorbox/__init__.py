@@ -3,9 +3,9 @@ Author       : zhangxianbing
 Date         : 2021-12-05 12:50:05
 Description  : 
 LastEditors  : zhangxianbing
-LastEditTime : 2021-12-07 11:21:44
+LastEditTime : 2021-12-07 11:22:52
 """
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 __author__ = "zhangxianbing"
 
 import logging
