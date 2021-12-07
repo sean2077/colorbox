@@ -15,8 +15,9 @@ setup(
     url="https://github.com/zhangxianbing/colorbox",
     packages=find_packages(include=[f"{__name__}*"]),
     python_requires=">=3.6",
-    license="Apache License 2.0",
-    keywords="options, argparse, config, cli, YAML, INI",
+    license="MIT License",
+    license_files=("LICENSE",),
+    keywords="color, bgr, rgb, hex color",
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
